@@ -1,4 +1,5 @@
 {  "name":"testpilot2",
+   "main": "lib/flight-control.js",
    "license":"MPL 2.0",
    "author":"Gregg Lind <gregg.lind@mozilla.com>",
    "version":"2.0",
