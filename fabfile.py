@@ -18,19 +18,26 @@ def mkdir_p(path):
         else: raise
 
 @task
-def cover():
+def coversetup():
 	with lcd(here):
 		local("rm -rf fakey && mkdir -p fakey/lib"
 			" && cp -r data doc test package.json fakey"
 			" && ~/gits/CoverJS/bin/coverjs -o fakey/lib `find lib -name '*js'`"
 			" && cp lib/coverobject.js  fakey/lib")
+
+@task
+def covertest():
+    with lcd(here):
 		try:
 			local(" cfx test --pkgdir=fakey")
 		except:
 			pass
 		time.sleep(2);
+
+@task
+def covershow():
+    with lcd(here):
 		local("node coveritall.js > coverage.html ; open coverage.html")
-		coverstats()
 
 @task
 def coverstats():
