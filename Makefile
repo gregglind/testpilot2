@@ -35,7 +35,6 @@ js:
 	curl -sS -L http://documentcloud.github.com/underscore/underscore-min.js  -o $(TOP)/data/js/underscore_min.js
 	curl -sS -L http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js -o $(TOP)/data/js/jquery.min.js
 	# (addon libraries)
-	curl -sS -L https://raw.github.com/julianceballos/sqlite-jetpack/master/sqlite.js -o $(TOP)/lib/sqlite.js
 	curl -sS -L https://raw.github.com/Gozala/scratch-kit/master/scratchpad.js -o $(TOP)/lib/scratchpad.js
 
 docs:
@@ -55,10 +54,8 @@ examples:
 	done
 	@cd $(TOP)/data/example && ln -fs ../../example_studies/example.json .
 
-submodules:
-	git submodule init && git submodule update
 
-build:  js submodules
+build:  js
 	@echo "run cfx xpi ; cfx run  or cfx --help"
 
 xpi:
