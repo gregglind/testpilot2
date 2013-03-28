@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
+	<meta charset="utf-8" />
     <title>Notification Window For Test Pilot</title>
     <!-- <link rel="stylesheet" href="styles.css" />  todo -->
     <style>
-    input {
+    button {
     	width: 100%;
     	display: inline-block;
     	height: 32px;
@@ -29,78 +29,38 @@
 <body>
 <div id="noticebox"></div>
 
+<!--
+Spec for notification box:
+
+Title
+subtitle
+content:  list -> 1 para per.
+buttons: [
+	text
+	name
+	hidesbox  - does this kill the box?
+	action    - to push back on
+]
+target:  an event target
+
+-->
 
 <script type="text/tempate" id='pilot-notification-template'>
-	<!-- css will set the image url based on the class. -->
-	<div><img id="cornerimage" class=<%= obj.iconClass %> src="skin/all/testpilot_32x32.png" /></div>
+	<div><img id="cornerimage" src="<%= obj.icon %>" /></div>
 	<h1 id="title"><%= obj.title %></h1>
-	<div id="text"><%= obj.text %></div>
-
-	<div id="buttons">
-	<% if (obj.showSubmitAlwaysCheckbox) { %>
-		<div class="callback-button"><input type="button" data-action="always" value="always"></input></div>
-	<% } %>
-	<% if (obj.showSubmit) { %>
-		<div class="callback-button"><input type="button" data-action="submit" value="<%= obj.submitLabel %>"></input></div>
-	<% } %>
-	<!-- TODO (glind) figure out link text vs. yes for all types, de-pervert this for exp and survey -->
-	<% if (obj.linkText) { %>
-		<div class="callback-button"><input type="button" data-action="yes" value="<%= obj.linkText %>"></input></div>
-	<% } %>
-	<div class="callback-button"><input type="button" data-action="infolink" value="more info"></input></div>
-	<div class="callback-button"><input type="button" data-action="no" value="No"></input></div>
-	<div class="callback-button"><input type="button" data-action="close" value="close window"></input></div>
-	</div> <!-- buttons -->
-	<div id='output'></div>
-</script>
-
-<script type="text/javascript" src="underscore-min.js"></script>
-<script type="text/javascript" src="jquery.min.js"></script>
-<script type="text/javascript">
-
-if (typeof(addon) === "undefined") {
-	var addon = {port: {
-		emit: function(what){
-			console.log("emit",what);
-		},
-		on: function(what){
-		 	console.log("on",what);
-		}
-	}}
-};
-
-function render(id, data){
-    var template = _.template($(id).html());
-    var s = template(data);
-    return s
-};
-
-$(function (){
-	addon.port.emit("jqready",{});
-});
-
-
-$(function (){
-	addon.port.on("customize",function(data){
-	//alert("got one!");
-	$('#noticebox').html(
-		render('#pilot-notification-template',data));
-	instrumentButtons();}
-)});
-
-
-var instrumentButtons = function(){
-	$(':button').click(function(evt){
-		var t = $(this);
-		var d = {id:t.attr('id'),name:t.attr('name'),data:t.data(),value:t.val()};
-		//$('#output').append("<p>got action "+ t.val() +"</p>")
-		$('#output').append("<p>"+JSON.stringify(d)+"</p>")
-		addon.port.emit("action",d);
-	})
-};
-
-
-//console.log(render('#pilot-notification-template',{title:"a title"}));
+	<% _.each(obj.subtitles,function(t){
+		%> <h2><%= t %></h2> <%
+	}) %>
+	<div id="text">
+	<% _.each(obj.content,function(t){
+		%> <p><%= t %></p> <%
+	}) %>
+	</div>
+	<% _.each(obj.buttons, function(button){ %>
+		<div class="callback-button">
+			<button type="button" data-action="<%= button.action %>" value="<%= button.value %>"><%= button.text %></input>
+		</div>
+	<% }) %>
 </script>
 
 </body>
