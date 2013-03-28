@@ -2,7 +2,7 @@
    "main": "lib/main.js",
    "license":"MPL 2.0",
    "author":"Gregg Lind <gregg.lind@mozilla.com>",
-   "version":"2.0.0.rc1",
+   "version":"2.0.0.rc2",
    "fullName":"Test Pilot",
    "id":"testpilot2@ux.mozilla.org",
    "description":"run interface studies, surveys, etc.",
