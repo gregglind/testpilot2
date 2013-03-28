@@ -1,7 +1,24 @@
-[{"author": "Gregg Lind <glind@mozilla.com>", "end": 86400000, "flightplan": [{"action": "wait", "time": 1000}, {"action": "ask"}], "name": "trivial example"},
-{"end": 86400000,
- "name": "waitforever",
- "flightplan": [
- 	{"action": "wait", "time":  1000000000000000000000}
- ]
-}]
+[
+  {	"author": "Gregg Lind <glind@mozilla.com>",
+   	"end": 86400000,
+   	"flightplan": [
+	   	{"action": "wait", "time": 1000},
+	   	{"action": "ask", "type": "warn"}
+   	],
+   	"name": "trivial example"},
+	{	"end": 86400000,
+	 	"name": "waitforever",
+	 	"flightplan": [
+	 		{"action": "wait", "time":  1000000000000000000000}
+	 	]
+	},
+	{	"end": 86400000,
+	 	"name": "ui runthrough",
+	 	"flightplan": [
+		 	{"action": "log", "msg":  "$$$ get your engines running!"},
+		 	{"action": "ask", "type":  "warn"},
+		 	{"action": "ask", "type":  "survey"},
+		 	{"action": "log", "msg":  "$$$ all done!  hooray"}
+		]
+	}
+]
